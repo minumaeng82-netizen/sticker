@@ -108,6 +108,7 @@
       min-height: 46px;
       background: #eee6df;
       color: #49372a;
+      touch-action: manipulation;
     }
 
     button:disabled {
@@ -167,6 +168,7 @@
 
     dialog {
       width: min(600px, 94vw);
+      max-height: 90vh;
       max-height: 90dvh;
       padding: 0;
       border: 0;
@@ -180,8 +182,9 @@
 
     .inside {
       padding: 23px;
+      max-height: 85vh;
       max-height: 85dvh;
-      overflow: auto;
+      overflow-y: auto;
     }
 
     .close {
@@ -245,6 +248,7 @@
     .names button {
       padding: 9px 12px;
       font-size: 13px;
+      flex-shrink: 0;
     }
 
     .actions {
@@ -268,6 +272,10 @@
       border-radius: 12px;
       font: inherit;
       font-size: 18px;
+    }
+
+    input:focus {
+      outline: 3px solid #d5b899;
     }
 
     .wide {
@@ -346,7 +354,9 @@
         체험 일정표
       </h2>
 
-      <button id="refresh" type="button">새로고침</button>
+      <button id="refresh" type="button">
+        새로고침
+      </button>
     </div>
 
     <div id="hours" class="hours"></div>
@@ -357,13 +367,14 @@
     </p>
   </main>
 
-  <!-- 시간 세션 선택 -->
+  <!-- 시간 세션 -->
   <dialog id="session" aria-labelledby="session-title">
     <div class="inside">
       <div class="bar">
         <h2 id="session-title"></h2>
 
         <button
+          type="button"
           class="close"
           data-close="session"
           aria-label="닫기"
@@ -381,6 +392,7 @@
         <h2 id="detail-title"></h2>
 
         <button
+          type="button"
           class="close"
           data-close="detail"
           aria-label="닫기"
@@ -390,7 +402,11 @@
       <p id="count" aria-live="polite"></p>
       <ol id="names" class="names"></ol>
 
-      <button id="add" class="primary wide">
+      <button
+        id="add"
+        type="button"
+        class="primary wide"
+      >
         이 시간에 신청하기
       </button>
     </div>
@@ -414,15 +430,15 @@
           required
         >
 
-        <label for="phone">보호자 연락처</label>
+        <label for="phone">연락처</label>
 
         <input
           id="phone"
           type="tel"
           inputmode="tel"
           autocomplete="tel"
-          placeholder="010-1234-5678"
-          maxlength="14"
+          placeholder="연락 가능한 전화번호"
+          maxlength="24"
           required
         >
 
@@ -430,7 +446,7 @@
           <strong>개인정보 수집·이용 안내</strong><br>
           수집·이용 주체: 김천다수초등학교 행사 운영 담당자<br>
           목적: 체험 신청 관리, 일정 변경 및 참가 안내<br>
-          항목: 재미있는 별명, 보호자 연락처, 신청 시간,
+          항목: 재미있는 별명, 연락처, 신청 시간,
           동의 일시 및 보호자 확인 기록<br>
           보유 기간: 2026년 12월 28일까지 보관 후 파기<br>
           동의를 거부할 수 있으나 온라인 신청은 제한됩니다.<br>
@@ -440,14 +456,24 @@
         </div>
 
         <label class="check">
-          <input id="consent" type="checkbox" required>
+          <input
+            id="consent"
+            type="checkbox"
+            required
+          >
+
           <span>
             [필수] 위 개인정보 수집·이용에 동의합니다.
           </span>
         </label>
 
         <label class="check">
-          <input id="guardian" type="checkbox" required>
+          <input
+            id="guardian"
+            type="checkbox"
+            required
+          >
+
           <span>
             [필수] 보호자가 직접 신청하거나 보호자와 함께 신청하고
             있으며, 만 14세 미만 참가자는 법정대리인이 안내를
@@ -456,11 +482,18 @@
         </label>
 
         <div class="actions">
-          <button type="button" data-close="entry">
+          <button
+            type="button"
+            data-close="entry"
+          >
             취소
           </button>
 
-          <button id="save" class="primary" type="submit">
+          <button
+            id="save"
+            class="primary"
+            type="submit"
+          >
             등록하기
           </button>
         </div>
@@ -485,11 +518,18 @@
         >
 
         <div class="actions">
-          <button type="button" data-close="removal">
+          <button
+            type="button"
+            data-close="removal"
+          >
             취소
           </button>
 
-          <button id="remove" class="danger" type="submit">
+          <button
+            id="remove"
+            class="danger"
+            type="submit"
+          >
             삭제하기
           </button>
         </div>
@@ -510,7 +550,7 @@
 
     const $ = id => document.getElementById(id);
 
-    // 09:40부터 16:40 시작 타임까지 총 22개
+    // 09:40 시작부터 16:40 시작까지 총 22타임
     const allSlots = Array.from(
       { length: 22 },
       (_, index) => 580 + index * 20
@@ -531,7 +571,7 @@
     let again = false;
     let timer;
 
-    const time = minutes => {
+    function time(minutes) {
       const hours = String(
         Math.floor(minutes / 60)
       ).padStart(2, '0');
@@ -541,19 +581,29 @@
       ).padStart(2, '0');
 
       return `${hours}:${mins}`;
-    };
+    }
 
-    const range = minutes =>
-      `${time(minutes)}~${time(minutes + 20)}`;
+    function range(minutes) {
+      return `${time(minutes)}~${time(minutes + 20)}`;
+    }
 
-    const hourLabel = value => {
-      if (value < 12) return `${value}시`;
-      if (value === 12) return '12시';
+    function hourLabel(value) {
+      if (value < 12) {
+        return `${value}시`;
+      }
+
+      if (value === 12) {
+        return '12시';
+      }
+
       return `오후 ${value - 12}시`;
-    };
+    }
 
-    const list = slot =>
-      rows.filter(row => Number(row.slot) === slot);
+    function list(slot) {
+      return rows.filter(
+        row => Number(row.slot) === slot
+      );
+    }
 
     function node(tag, className, text) {
       const element = document.createElement(tag);
@@ -603,6 +653,7 @@
         );
 
         const button = node('button', 'hour');
+        button.type = 'button';
 
         button.append(
           node('strong', '', hourLabel(h)),
@@ -631,7 +682,7 @@
       renderDetail();
     }
 
-    // 선택한 시간의 20분 단위 타임
+    // 선택한 세션의 20분 단위 시간
     function renderSession() {
       if (hour === null) return;
 
@@ -651,6 +702,8 @@
           'button',
           'slot' + (count >= 8 ? ' full' : '')
         );
+
+        button.type = 'button';
 
         button.append(
           node('strong', '', range(slot)),
@@ -673,7 +726,7 @@
       }
     }
 
-    // 신청자 확대 명단
+    // 별명 명단
     function renderDetail() {
       if (selected === null) return;
 
@@ -688,13 +741,24 @@
 
       if (!items.length) {
         $('names').append(
-          node('li', '', '첫 번째 신청을 기다리고 있어요.')
+          node(
+            'li',
+            '',
+            '첫 번째 신청을 기다리고 있어요.'
+          )
         );
       }
 
       items.forEach((row, index) => {
         const item = node('li');
-        const button = node('button', 'danger', '삭제');
+
+        const button = node(
+          'button',
+          'danger',
+          '삭제'
+        );
+
+        button.type = 'button';
 
         button.onclick = () => {
           if (removing) return;
@@ -727,7 +791,7 @@
         : '이 시간에 신청하기';
     }
 
-    // 데이터 조회
+    // 신청 명단 불러오기
     async function load() {
       if (!db) return;
 
@@ -749,15 +813,15 @@
 
         rows = data || [];
         ready = true;
-        $('error').textContent = '';
 
+        $('error').textContent = '';
         render();
       } catch (error) {
         ready = false;
 
         $('error').textContent =
           '명단을 불러오지 못했습니다. ' +
-          '새 SQL 설정을 확인하세요.\n' +
+          'Supabase SQL 설정을 확인하세요.\n' +
           error.message;
 
         render();
@@ -772,9 +836,11 @@
       }
     }
 
-    // 신청 창 열기
+    // 신청 입력 창 열기
     $('add').onclick = () => {
-      if (!ready || saving || selected === null) return;
+      if (!ready || saving || selected === null) {
+        return;
+      }
 
       if (list(selected).length >= 8) {
         alert('정원이 마감되었습니다.');
@@ -802,9 +868,14 @@
       if (saving || !ready) return;
 
       const nickname = $('student').value.trim();
-      const slot = Number($('entry').dataset.slot);
+      const slot = Number(
+        $('entry').dataset.slot
+      );
 
-      if (nickname.length < 2 || nickname.length > 40) {
+      if (
+        nickname.length < 2 ||
+        nickname.length > 40
+      ) {
         alert('별명을 2~40자로 입력하세요.');
         return;
       }
@@ -834,7 +905,8 @@
         await load();
       } catch (error) {
         alert(
-          '등록하지 못했습니다: ' + error.message +
+          '등록하지 못했습니다: ' +
+          error.message +
           '\n통신 오류라면 재신청 전 명단을 확인하세요.'
         );
 
@@ -854,6 +926,7 @@
 
       removing = true;
       $('remove').disabled = true;
+      $('remove').textContent = '삭제 중…';
 
       try {
         const { error } = await db.rpc(
@@ -870,33 +943,49 @@
 
         await load();
       } catch (error) {
-        alert('삭제하지 못했습니다: ' + error.message);
+        alert(
+          '삭제하지 못했습니다: ' +
+          error.message
+        );
       } finally {
         removing = false;
         $('remove').disabled = false;
+        $('remove').textContent = '삭제하기';
       }
     };
 
     // 창 닫기
-    document.querySelectorAll('[data-close]').forEach(button => {
-      button.onclick = () => {
-        $(button.dataset.close).close();
-      };
-    });
+    document
+      .querySelectorAll('[data-close]')
+      .forEach(button => {
+        button.onclick = () => {
+          $(button.dataset.close).close();
+        };
+      });
 
     $('removal').addEventListener('close', () => {
       $('password').value = '';
+    });
+
+    $('entry').addEventListener('close', () => {
+      $('student').value = '';
+      $('phone').value = '';
+      $('consent').checked = false;
+      $('guardian').checked = false;
     });
 
     $('refresh').onclick = () => {
       void load();
     };
 
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        void load();
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+        if (!document.hidden) {
+          void load();
+        }
       }
-    });
+    );
 
     window.addEventListener('online', () => {
       void load();
@@ -904,7 +993,7 @@
 
     render();
 
-    // Supabase 연결
+    // Supabase 연결 및 실시간 동기화
     try {
       if (!SUPABASE_URL || !SUPABASE_KEY) {
         throw new Error(
@@ -913,7 +1002,10 @@
       }
 
       if (!window.supabase) {
-        throw new Error('인터넷 연결을 확인해 주세요.');
+        throw new Error(
+          '연결 프로그램을 불러오지 못했습니다. ' +
+          '인터넷 연결을 확인해 주세요.'
+        );
       }
 
       db = window.supabase.createClient(
@@ -948,7 +1040,7 @@
 
       void load();
 
-      // 연결 누락에 대비한 보조 동기화
+      // 실시간 연결 누락에 대비한 보조 동기화
       setInterval(() => {
         if (!document.hidden) {
           void load();
