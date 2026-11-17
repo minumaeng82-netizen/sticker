@@ -8,7 +8,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -39,27 +41,30 @@
     }
 
     h1 {
+      margin: 14px 0;
       font-size: 27px;
       line-height: 1.4;
-      margin: 14px 0;
     }
 
     header p {
+      margin: 0;
       font-size: 15px;
       line-height: 1.8;
-      margin: 0;
     }
 
     #status {
       display: inline-block;
       margin-top: 15px;
-      font-size: 12px;
-      background: #603923;
       padding: 7px 12px;
       border-radius: 20px;
+      background: #603923;
+      font-size: 12px;
     }
 
-    h2 { font-size: 21px; line-height: 1.5; }
+    h2 {
+      font-size: 21px;
+      line-height: 1.5;
+    }
 
     .hours {
       display: grid;
@@ -67,43 +72,53 @@
       gap: 12px;
     }
 
+    button {
+      min-height: 46px;
+      padding: 13px 17px;
+      border: 0;
+      border-radius: 12px;
+      background: #eee6df;
+      color: #49372a;
+      font: inherit;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #c79461;
+      outline-offset: 2px;
+    }
+
     .hour {
-      background: white;
-      text-align: left;
-      border: 1px solid #e6d8ca;
-      border-radius: 18px;
-      padding: 20px 16px;
-      min-height: 125px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      min-height: 125px;
+      padding: 20px 16px;
+      border: 1px solid #e6d8ca;
+      border-radius: 18px;
+      background: white;
+      text-align: left;
     }
 
-    .hour strong { font-size: 25px; }
-    .hour span { font-size: 14px; color: #796557; }
+    .hour strong {
+      font-size: 25px;
+    }
+
+    .hour span {
+      font-size: 14px;
+      color: #796557;
+    }
 
     .hour em {
       font-size: 12px;
       font-style: normal;
       color: #805134;
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-      border: 0;
-      border-radius: 12px;
-      padding: 13px 17px;
-      min-height: 46px;
-      background: #eee6df;
-      color: #49372a;
-    }
-
-    button:disabled { opacity: .45; cursor: not-allowed; }
-
-    button:focus-visible {
-      outline: 3px solid #c79461;
-      outline-offset: 2px;
     }
 
     .primary {
@@ -119,7 +134,9 @@
       gap: 10px;
     }
 
-    .bar h2 { margin: 0; }
+    .bar h2 {
+      margin: 0;
+    }
 
     .error {
       white-space: pre-wrap;
@@ -128,17 +145,25 @@
     }
 
     .error:not(:empty) {
-      padding: 12px;
-      background: #fff0ef;
-      border-radius: 12px;
       margin: 14px 0;
+      padding: 12px;
+      border-radius: 12px;
+      background: #fff0ef;
     }
 
-    .intro { margin: 22px 0 14px; }
-    .hint { color: #7c6e61; font-size: 13px; line-height: 1.7; }
+    .intro {
+      margin: 22px 0 14px;
+    }
+
+    .hint {
+      color: #7c6e61;
+      font-size: 13px;
+      line-height: 1.7;
+    }
 
     dialog {
       width: min(600px, 94vw);
+      max-height: 90vh;
       max-height: 90dvh;
       padding: 0;
       border: 0;
@@ -146,15 +171,21 @@
       color: #362b24;
     }
 
-    dialog::backdrop { background: #21170fbb; }
-
-    .inside {
-      padding: 23px;
-      max-height: 85dvh;
-      overflow: auto;
+    dialog::backdrop {
+      background: #21170fbb;
     }
 
-    .close { font-size: 24px; padding: 5px 14px; }
+    .inside {
+      max-height: 85vh;
+      max-height: 85dvh;
+      padding: 23px;
+      overflow-y: auto;
+    }
+
+    .close {
+      padding: 5px 14px;
+      font-size: 24px;
+    }
 
     .slots {
       display: grid;
@@ -166,31 +197,40 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      text-align: left;
-      background: #faf4ed;
-      border: 1px solid #e3d5c6;
-      padding: 22px 17px;
       gap: 10px;
+      padding: 22px 17px;
+      border: 1px solid #e3d5c6;
+      background: #faf4ed;
+      text-align: left;
     }
 
-    .slot strong { font-size: 24px; }
-    .slot span { font-size: 14px; color: #805134; }
-    .slot.full { background: #fff0f0; }
+    .slot strong {
+      font-size: 24px;
+    }
+
+    .slot span {
+      font-size: 14px;
+      color: #805134;
+    }
+
+    .slot.full {
+      background: #fff0f0;
+    }
 
     .names {
-      list-style: none;
-      padding: 0;
       display: grid;
       gap: 10px;
+      padding: 0;
+      list-style: none;
     }
 
     .names li {
       display: flex;
       align-items: center;
       gap: 12px;
-      background: #faf4ed;
-      border-radius: 12px;
       padding: 15px;
+      border-radius: 12px;
+      background: #faf4ed;
     }
 
     .name {
@@ -223,22 +263,32 @@
       font-size: 18px;
     }
 
-    .wide { width: 100%; }
-    #count { color: #805134; font-size: 18px; }
+    input:focus {
+      outline: 3px solid #d5b899;
+    }
+
+    .wide {
+      width: 100%;
+    }
+
+    #count {
+      color: #805134;
+      font-size: 18px;
+    }
 
     .privacy {
-      background: #faf4ed;
+      margin-top: 18px;
       padding: 14px;
       border-radius: 12px;
-      margin-top: 18px;
+      background: #faf4ed;
       font-size: 14px;
       line-height: 1.8;
     }
 
     .check {
       display: flex;
-      gap: 10px;
       align-items: flex-start;
+      gap: 10px;
     }
 
     .check input {
@@ -249,10 +299,21 @@
     }
 
     @media (max-width: 380px) {
-      h1 { font-size: 23px; }
-      .hour strong { font-size: 22px; }
-      .slot strong { font-size: 21px; }
-      .inside { padding: 18px; }
+      h1 {
+        font-size: 23px;
+      }
+
+      .hour strong {
+        font-size: 22px;
+      }
+
+      .slot strong {
+        font-size: 21px;
+      }
+
+      .inside {
+        padding: 18px;
+      }
     }
   </style>
 </head>
@@ -261,6 +322,7 @@
   <main>
     <header>
       <small>2026년 발명인공지능&amp;메이커 한마당</small>
+
       <h1>나만의 스티커 만들기 체험 신청</h1>
 
       <p>
@@ -276,8 +338,14 @@
     <div id="error" class="error" role="alert"></div>
 
     <div class="bar intro">
-      <h2>2026년 11월 28일<br>체험 일정표</h2>
-      <button id="refresh" type="button">새로고침</button>
+      <h2>
+        2026년 11월 28일<br>
+        체험 일정표
+      </h2>
+
+      <button id="refresh" type="button">
+        새로고침
+      </button>
     </div>
 
     <div id="hours" class="hours"></div>
@@ -288,12 +356,14 @@
     </p>
   </main>
 
+  <!-- 시간별 세션 -->
   <dialog id="session" aria-labelledby="session-title">
     <div class="inside">
       <div class="bar">
         <h2 id="session-title"></h2>
 
         <button
+          type="button"
           class="close"
           data-close="session"
           aria-label="닫기"
@@ -304,12 +374,14 @@
     </div>
   </dialog>
 
+  <!-- 신청자 명단 -->
   <dialog id="detail" aria-labelledby="detail-title">
     <div class="inside">
       <div class="bar">
         <h2 id="detail-title"></h2>
 
         <button
+          type="button"
           class="close"
           data-close="detail"
           aria-label="닫기"
@@ -319,12 +391,17 @@
       <p id="count" aria-live="polite"></p>
       <ol id="names" class="names"></ol>
 
-      <button id="add" class="primary wide">
+      <button
+        id="add"
+        class="primary wide"
+        type="button"
+      >
         이 시간에 신청하기
       </button>
     </div>
   </dialog>
 
+  <!-- 신청 입력 -->
   <dialog id="entry" aria-labelledby="entry-title">
     <div class="inside">
       <h2 id="entry-title">체험 신청하기</h2>
@@ -361,19 +438,33 @@
           항목: 재미있는 별명, 연락처, 신청 시간, 동의 일시<br>
           보유 기간: 2026년 12월 28일까지 보관 후 파기<br>
           동의를 거부할 수 있으나 온라인 신청은 제한됩니다.<br>
-          공개 신청 명단에는 입력한 별명이 표시되며 연락처는
-          공개하지 않습니다. 실명이나 연락처가 포함되지 않은
-          별명을 사용해 주세요.
+          공개 신청 명단에는 입력한 별명이 표시되며
+          연락처는 공개하지 않습니다.
+          실명이나 연락처가 포함되지 않은 별명을 사용해 주세요.
         </div>
 
         <label class="check">
-          <input id="consent" type="checkbox" required>
-          <span>[필수] 위 개인정보 수집·이용에 동의합니다.</span>
+          <input
+            id="consent"
+            type="checkbox"
+            required
+          >
+
+          <span>
+            [필수] 위 개인정보 수집·이용에 동의합니다.
+          </span>
         </label>
 
         <div class="actions">
-          <button type="button" data-close="entry">취소</button>
-          <button id="save" class="primary" type="submit">
+          <button type="button" data-close="entry">
+            취소
+          </button>
+
+          <button
+            id="save"
+            class="primary"
+            type="submit"
+          >
             등록하기
           </button>
         </div>
@@ -384,52 +475,92 @@
   <script>
     'use strict';
 
-    const URL = 'https://epspxdkuwjvdfgzntgwa.supabase.co';
-    const KEY = 'sb_publishable_i74UwJOH_Zm0AUk3cdTdvQ_Nm5T2mOe';
+    // URL이라는 이름은 브라우저 기본 기능과 충돌할 수 있으므로
+    // SUPABASE_URL이라는 별도 이름을 사용합니다.
+    const SUPABASE_URL =
+      'https://epspxdkuwjvdfgzntgwa.supabase.co';
+
+    const SUPABASE_KEY =
+      'sb_publishable_i74UwJOH_Zm0AUk3cdTdvQ_Nm5T2mOe';
+
     const TABLE = 'festival_sticker_reservations';
 
     const $ = id => document.getElementById(id);
 
+    // 09:40부터 16:40 시작 타임까지 총 22개
     const allSlots = Array.from(
       { length: 22 },
-      (_, i) => 580 + i * 20
+      (_, index) => 580 + index * 20
     );
 
     let db;
     let rows = [];
     let ready = false;
     let live = false;
+
     let hour = null;
     let selected = null;
+
     let saving = false;
     let loading = false;
     let again = false;
     let timer;
 
-    const time = n =>
-      `${String(Math.floor(n / 60)).padStart(2, '0')}:` +
-      `${String(n % 60).padStart(2, '0')}`;
+    function time(minutes) {
+      const hours = String(
+        Math.floor(minutes / 60)
+      ).padStart(2, '0');
 
-    const range = n => `${time(n)}~${time(n + 20)}`;
+      const mins = String(
+        minutes % 60
+      ).padStart(2, '0');
 
-    const hourLabel = h =>
-      h < 12 ? `${h}시` : h === 12 ? '12시' : `오후 ${h - 12}시`;
+      return `${hours}:${mins}`;
+    }
 
-    const list = n =>
-      rows.filter(row => Number(row.slot) === n);
+    function range(minutes) {
+      return `${time(minutes)}~${time(minutes + 20)}`;
+    }
+
+    function hourLabel(value) {
+      if (value < 12) {
+        return `${value}시`;
+      }
+
+      if (value === 12) {
+        return '12시';
+      }
+
+      return `오후 ${value - 12}시`;
+    }
+
+    function list(slot) {
+      return rows.filter(
+        row => Number(row.slot) === slot
+      );
+    }
 
     function node(tag, className, text) {
       const element = document.createElement(tag);
-      if (className) element.className = className;
-      if (text !== undefined) element.textContent = text;
+
+      if (className) {
+        element.className = className;
+      }
+
+      if (text !== undefined) {
+        element.textContent = text;
+      }
+
       return element;
     }
 
     function openDialog(id) {
-      if (!$(id).open) $(id).showModal();
+      if (!$(id).open) {
+        $(id).showModal();
+      }
     }
 
-    function status() {
+    function showStatus() {
       $('status').textContent = !ready
         ? '연결 확인 필요'
         : live
@@ -442,15 +573,16 @@
 
       for (let h = 9; h <= 16; h++) {
         const slots = allSlots.filter(
-          n => Math.floor(n / 60) === h
+          slot => Math.floor(slot / 60) === h
         );
 
         const used = slots.reduce(
-          (sum, n) => sum + list(n).length,
+          (sum, slot) => sum + list(slot).length,
           0
         );
 
         const button = node('button', 'hour');
+        button.type = 'button';
 
         button.append(
           node('strong', '', hourLabel(h)),
@@ -462,8 +594,10 @@
           node(
             'em',
             '',
-            `${slots.length}개 타임 · 잔여 ` +
-            `${Math.max(0, slots.length * 8 - used)}자리`
+            ready
+              ? `${slots.length}개 타임 · 잔여 ` +
+                `${Math.max(0, slots.length * 8 - used)}자리`
+              : '신청 현황 확인 중'
           )
         );
 
@@ -489,28 +623,32 @@
       $('slots').replaceChildren();
 
       const slots = allSlots.filter(
-        n => Math.floor(n / 60) === hour
+        slot => Math.floor(slot / 60) === hour
       );
 
-      for (const n of slots) {
-        const count = list(n).length;
+      for (const slot of slots) {
+        const count = list(slot).length;
 
         const button = node(
           'button',
           'slot' + (count >= 8 ? ' full' : '')
         );
 
+        button.type = 'button';
+
+        const label = !ready
+          ? '연결 확인 중'
+          : count >= 8
+            ? '마감 · 명단 보기'
+            : `${count}/8명 ›`;
+
         button.append(
-          node('strong', '', range(n)),
-          node(
-            'span',
-            '',
-            count >= 8 ? '마감 · 명단 보기' : `${count}/8명 ›`
-          )
+          node('strong', '', range(slot)),
+          node('span', '', label)
         );
 
         button.onclick = () => {
-          selected = n;
+          selected = slot;
           renderDetail();
           openDialog('detail');
         };
@@ -525,32 +663,36 @@
       const items = list(selected);
 
       $('detail-title').textContent = range(selected);
-      $('count').textContent =
-        `11월 28일 · ${items.length}명 / 정원 8명`;
+
+      $('count').textContent = ready
+        ? `11월 28일 · ${items.length}명 / 정원 8명`
+        : '최신 명단을 확인할 수 없습니다. 연결을 확인해 주세요.';
 
       $('names').replaceChildren();
 
-      if (!items.length) {
+      if (!items.length && ready) {
         $('names').append(
           node('li', '', '첫 번째 신청을 기다리고 있어요.')
         );
       }
 
-      items.forEach((row, i) => {
+      items.forEach((row, index) => {
         const item = node('li');
 
         item.append(
-          node('span', '', `${i + 1}.`),
+          node('span', '', `${index + 1}.`),
           node('span', 'name', row.student_name)
         );
 
         $('names').append(item);
       });
 
-      $('add').disabled = !ready || items.length >= 8;
+      $('add').disabled =
+        !ready || items.length >= 8;
 
-      $('add').textContent =
-        items.length >= 8
+      $('add').textContent = !ready
+        ? '연결을 확인해 주세요'
+        : items.length >= 8
           ? '정원 8명 마감'
           : '이 시간에 신청하기';
     }
@@ -576,19 +718,20 @@
 
         rows = data || [];
         ready = true;
+
         $('error').textContent = '';
         render();
       } catch (error) {
         ready = false;
 
         $('error').textContent =
-          '명단을 불러오지 못했습니다. SQL 설정을 확인하세요.\n' +
+          '명단을 불러오지 못했습니다.\n' +
           error.message;
 
         render();
       } finally {
         loading = false;
-        status();
+        showStatus();
 
         if (again) {
           again = false;
@@ -598,7 +741,9 @@
     }
 
     $('add').onclick = () => {
-      if (!ready || saving || selected === null) return;
+      if (!ready || saving || selected === null) {
+        return;
+      }
 
       if (list(selected).length >= 8) {
         alert('정원이 마감되었습니다.');
@@ -623,10 +768,15 @@
 
       if (saving || !ready) return;
 
-      const name = $('student').value.trim();
-      const slot = Number($('entry').dataset.slot);
+      const nickname = $('student').value.trim();
+      const slot = Number(
+        $('entry').dataset.slot
+      );
 
-      if (name.length < 2 || name.length > 40) {
+      if (
+        nickname.length < 2 ||
+        nickname.length > 40
+      ) {
         alert('별명을 2~40자로 입력하세요.');
         return;
       }
@@ -640,12 +790,9 @@
           'register_festival_sticker',
           {
             p_slot: slot,
-            p_name: name,
+            p_name: nickname,
             p_phone: $('phone').value,
             p_consent: $('consent').checked,
-
-            // 기존 함수의 인수 형식과 호환하기 위한 값입니다.
-            // 서버에서는 보호자 확인을 필수로 요구하지 않습니다.
             p_guardian: false
           }
         );
@@ -659,7 +806,8 @@
         await load();
       } catch (error) {
         alert(
-          '등록하지 못했습니다: ' + error.message +
+          '등록하지 못했습니다: ' +
+          error.message +
           '\n통신 오류라면 재신청 전 명단을 확인하세요.'
         );
 
@@ -682,7 +830,9 @@
     };
 
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) void load();
+      if (!document.hidden) {
+        void load();
+      }
     });
 
     window.addEventListener('online', () => {
@@ -693,10 +843,16 @@
 
     try {
       if (!window.supabase) {
-        throw new Error('인터넷 연결을 확인해 주세요.');
+        throw new Error(
+          'Supabase 연결 프로그램을 불러오지 못했습니다. ' +
+          '인터넷 연결을 확인해 주세요.'
+        );
       }
 
-      db = window.supabase.createClient(URL, KEY);
+      db = window.supabase.createClient(
+        SUPABASE_URL.trim(),
+        SUPABASE_KEY.trim()
+      );
 
       db.channel('festival-sticker-20261128')
         .on(
@@ -708,23 +864,31 @@
           },
           () => {
             clearTimeout(timer);
-            timer = setTimeout(() => void load(), 150);
+
+            timer = setTimeout(() => {
+              void load();
+            }, 150);
           }
         )
         .subscribe(state => {
           live = state === 'SUBSCRIBED';
-          status();
-          if (live) void load();
+          showStatus();
+
+          if (live) {
+            void load();
+          }
         });
 
       void load();
 
       setInterval(() => {
-        if (!document.hidden) void load();
+        if (!document.hidden) {
+          void load();
+        }
       }, 15000);
     } catch (error) {
       $('error').textContent = error.message;
-      status();
+      showStatus();
     }
   </script>
 </body>
