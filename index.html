@@ -475,8 +475,6 @@
   <script>
     'use strict';
 
-    // URL이라는 이름은 브라우저 기본 기능과 충돌할 수 있으므로
-    // SUPABASE_URL이라는 별도 이름을 사용합니다.
     const SUPABASE_URL =
       'https://epspxdkuwjvdfgzntgwa.supabase.co';
 
@@ -487,7 +485,7 @@
 
     const $ = id => document.getElementById(id);
 
-    // 10:00부터 16:30 시작 타임까지 총 14개 (30분 단위)
+    // 10:00(600분)부터 16:30(990분) 시작 타임까지 30분 단위로 총 14개
     const allSlots = Array.from(
       { length: 14 },
       (_, index) => 600 + index * 30
@@ -523,15 +521,15 @@
     }
 
     function hourLabel(value) {
-      if (value < 12) {
-        return `${value}시`;
-      }
-
       if (value === 12) {
         return '12시';
       }
 
-      return `오후 ${value - 12}시`;
+      if (value > 12) {
+        return `오후 ${value - 12}시`;
+      }
+
+      return `${value}시`;
     }
 
     function list(slot) {
@@ -711,6 +709,7 @@
         const { data, error } = await db
           .from(TABLE)
           .select('id,slot,student_name,created_at')
+          .in('slot', allSlots)
           .order('created_at', { ascending: true })
           .order('id', { ascending: true });
 
