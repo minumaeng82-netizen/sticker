@@ -12,6 +12,11 @@
       box-sizing: border-box;
     }
 
+    html,
+    body {
+      height: 100%;
+    }
+
     body {
       margin: 0;
       background: #faf5ef;
@@ -20,68 +25,55 @@
     }
 
     main {
-      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      max-width: 720px;
+      min-height: 100vh;
+      min-height: 100dvh;
       margin: auto;
-      padding: 20px 16px 44px;
+      padding: 18px 16px 24px;
+      gap: 14px;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding: 26px 22px;
+      padding: 22px 20px;
       border-radius: 22px;
       background: #805134;
       color: white;
     }
 
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     header small {
-      display: block;
       color: #ffdfa8;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
     }
 
+    #status {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #603923;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     h1 {
-      margin: 8px 0 6px;
-      font-size: clamp(26px, 4vw, 34px);
+      margin: 10px 0 4px;
+      font-size: clamp(24px, 5vw, 32px);
       line-height: 1.3;
     }
 
     header p {
       margin: 0;
-      font-size: 15px;
-      color: #f6ebe0;
-    }
-
-    .status-box {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-    }
-
-    #status {
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: #603923;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    button {
-      min-height: 42px;
-      padding: 10px 16px;
-      border: 0;
-      border-radius: 11px;
-      background: #ffdfa8;
-      color: #362b24;
-      font: inherit;
       font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
+      color: #f6ebe0;
     }
 
     .error {
@@ -91,117 +83,209 @@
     }
 
     .error:not(:empty) {
-      margin: 16px 0;
-      padding: 14px;
+      padding: 12px 14px;
       border-radius: 14px;
       background: #fff0ef;
     }
 
-    .kpi {
+    .nav-bar {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin: 18px 0 22px;
-    }
-
-    .kpi-card {
-      padding: 18px;
-      border-radius: 16px;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 18px;
       background: white;
       border: 1px solid #e6d8ca;
     }
 
-    .kpi-card span {
-      display: block;
-      font-size: 14px;
-      color: #796557;
+    .nav-btn {
+      min-width: 82px;
+      min-height: 50px;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 12px;
+      background: #eee6df;
+      color: #49372a;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
     }
 
-    .kpi-card strong {
-      display: block;
-      margin-top: 6px;
-      font-size: 30px;
-      color: #805134;
+    .nav-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
     }
 
-    .board {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
+    .slot-select {
+      width: 100%;
+      min-height: 50px;
+      padding: 10px 12px;
+      border: 1px solid #dfd1c3;
+      border-radius: 12px;
+      background: #faf5ef;
+      color: #362b24;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 800;
+      text-align: center;
     }
 
-    .card {
+    .stage {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      padding: 18px;
-      border-radius: 18px;
+      padding: 24px 20px;
+      border-radius: 24px;
       background: white;
       border: 2px solid #e6d8ca;
     }
 
-    .card.has-people {
+    .stage.has-people {
       border-color: #a9c8b3;
-      background: #f6fcf7;
     }
 
-    .card.full {
+    .stage.full {
       border-color: #e3a4b0;
-      background: #fff2f4;
     }
 
-    .card-top {
+    .stage-head {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 8px;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 18px;
+      border-bottom: 2px dashed #eaded2;
     }
 
-    .slot-time {
-      font-size: 22px;
-      font-weight: 800;
+    .time-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b6c52;
+      margin-bottom: 4px;
     }
 
-    .slot-badge {
-      font-size: 18px;
-      font-weight: 800;
+    .big-time {
+      font-size: clamp(34px, 8vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .count-box {
+      text-align: right;
+    }
+
+    .big-count {
+      display: block;
+      font-size: clamp(28px, 6.5vw, 38px);
+      font-weight: 900;
       color: #805134;
     }
 
-    .card.full .slot-badge {
+    .stage.full .big-count {
       color: #a32b3b;
     }
 
-    .remain {
-      font-size: 13px;
+    .remain-text {
+      font-size: 15px;
+      font-weight: 700;
       color: #796557;
     }
 
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: auto;
+    .roster {
+      flex: 1;
+      display: grid;
+      grid-template-rows: repeat(8, minmax(56px, 1fr));
+      gap: 10px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
     }
 
-    .chip {
-      padding: 6px 10px;
-      border-radius: 999px;
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 14px;
       background: #faf4ed;
-      border: 1px solid #e3d5c6;
-      font-size: 14px;
+      border: 1px solid #e8dccf;
+    }
+
+    .row.empty {
+      background: #fcfaf7;
+      border: 1px dashed #dfd3c6;
+      color: #a19182;
+    }
+
+    .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #805134;
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .row.empty .num {
+      background: #e5dad0;
+      color: #8a796a;
+    }
+
+    .nickname {
+      flex: 1;
+      font-size: clamp(21px, 4.8vw, 27px);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .row.empty .nickname {
+      font-size: 18px;
       font-weight: 600;
     }
 
-    .empty-note {
-      font-size: 14px;
-      color: #968576;
+    .phone-tail {
+      padding: 6px 12px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid #dfd1c3;
+      color: #805134;
+      font-size: clamp(18px, 4vw, 22px);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
-    @media (max-width: 640px) {
-      .kpi {
-        grid-template-columns: 1fr;
-      }
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: #7c6e61;
+      font-size: 13px;
+    }
+
+    .refresh-btn {
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid #dfd1c3;
+      border-radius: 10px;
+      background: white;
+      color: #49372a;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -209,36 +293,41 @@
 <body>
   <main>
     <header>
-      <div>
+      <div class="header-top">
         <small>2026년 발명인공지능&amp;메이커 한마당</small>
-        <h1>나만의 스티커 만들기 · 실시간 체험 현황</h1>
-        <p>2026년 11월 28일 · 10:00~17:00 (타임당 30분 · 정원 8명)</p>
-      </div>
-
-      <div class="status-box">
         <div id="status" role="status" aria-live="polite">연결 확인 중…</div>
-        <button id="refresh" type="button">새로고침</button>
       </div>
+      <h1>나만의 스티커 만들기 · 체험자 확인</h1>
+      <p>2026년 11월 28일 · 타임당 30분 · 정원 8명</p>
     </header>
 
     <div id="error" class="error" role="alert"></div>
 
-    <section class="kpi" aria-label="전체 체험 요약">
-      <div class="kpi-card">
-        <span>전체 신청 인원</span>
-        <strong id="kpi-total">0명</strong>
+    <nav class="nav-bar" aria-label="체험 시간대 이동">
+      <button id="prev" class="nav-btn" type="button">‹ 이전</button>
+      <select id="slot-select" class="slot-select" aria-label="체험 시간 선택"></select>
+      <button id="next" class="nav-btn" type="button">다음 ›</button>
+    </nav>
+
+    <section id="stage" class="stage" aria-live="polite">
+      <div class="stage-head">
+        <div>
+          <span id="step-info" class="time-label"></span>
+          <strong id="big-time" class="big-time">10:00~10:30</strong>
+        </div>
+        <div class="count-box">
+          <strong id="big-count" class="big-count">0 / 8명</strong>
+          <span id="remain-text" class="remain-text">잔여 8자리</span>
+        </div>
       </div>
-      <div class="kpi-card">
-        <span>전체 잔여 좌석</span>
-        <strong id="kpi-remain">112자리</strong>
-      </div>
-      <div class="kpi-card">
-        <span>정원 마감 타임</span>
-        <strong id="kpi-full">0 / 14</strong>
-      </div>
+
+      <ol id="roster" class="roster"></ol>
     </section>
 
-    <section id="board" class="board" aria-label="시간대별 신청 현황"></section>
+    <div class="footer-bar">
+      <span id="page-summary">전체 신청 0명 / 112자리</span>
+      <button id="refresh" class="refresh-btn" type="button">새로고침</button>
+    </div>
   </main>
 
   <script>
@@ -258,18 +347,25 @@
       (_, index) => 600 + index * 30
     );
 
-    const CAPACITY_PER_SLOT = 8;
-    const TOTAL_CAPACITY = SLOTS.length * CAPACITY_PER_SLOT;
+    const CAPACITY = 8;
 
     const $ = id => document.getElementById(id);
 
     let db;
     let rows = [];
+    let currentIndex = initialSlotIndex();
     let ready = false;
     let live = false;
     let loading = false;
     let again = false;
     let timer;
+
+    function initialSlotIndex() {
+      const now = new Date();
+      const minutes = now.getHours() * 60 + now.getMinutes();
+      const idx = SLOTS.findIndex(slot => minutes >= slot && minutes < slot + 30);
+      return idx >= 0 ? idx : 0;
+    }
 
     function fmt(minutes) {
       return (
@@ -295,76 +391,92 @@
           : '자동 새로고침 중';
     }
 
+    function buildSelectOptions() {
+      $('slot-select').replaceChildren();
+
+      SLOTS.forEach((slot, idx) => {
+        const count = bySlot(slot).length;
+        const opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = `${range(slot)} (${count}/${CAPACITY}명)`;
+        $('slot-select').append(opt);
+      });
+
+      $('slot-select').value = String(currentIndex);
+    }
+
     function render() {
-      $('kpi-total').textContent = ready ? `${rows.length}명` : '확인 중';
-      $('kpi-remain').textContent = ready
-        ? `${Math.max(0, TOTAL_CAPACITY - rows.length)}자리`
+      buildSelectOptions();
+
+      const slot = SLOTS[currentIndex];
+      const list = bySlot(slot);
+      const count = list.length;
+      const isFull = count >= CAPACITY;
+
+      $('prev').disabled = currentIndex <= 0;
+      $('next').disabled = currentIndex >= SLOTS.length - 1;
+
+      $('stage').className =
+        'stage' +
+        (count > 0 ? ' has-people' : '') +
+        (isFull ? ' full' : '');
+
+      $('step-info').textContent =
+        `${currentIndex + 1} / ${SLOTS.length}번째 체험 타임`;
+
+      $('big-time').textContent = range(slot);
+
+      $('big-count').textContent = ready
+        ? `${count} / ${CAPACITY}명`
         : '확인 중';
 
-      const fullSlots = SLOTS.filter(
-        s => bySlot(s).length >= CAPACITY_PER_SLOT
-      ).length;
+      $('remain-text').textContent = ready
+        ? (isFull ? '정원 마감' : `잔여 ${CAPACITY - count}자리`)
+        : '현황을 불러오는 중입니다';
 
-      $('kpi-full').textContent = ready
-        ? `${fullSlots} / ${SLOTS.length}`
-        : '확인 중';
+      $('page-summary').textContent = ready
+        ? `전체 신청 ${rows.length}명 / ${SLOTS.length * CAPACITY}자리`
+        : '연결 상태를 확인해 주세요';
 
-      $('board').replaceChildren();
+      $('roster').replaceChildren();
 
-      for (const slot of SLOTS) {
-        const list = bySlot(slot);
-        const count = list.length;
-        const isFull = count >= CAPACITY_PER_SLOT;
+      for (let i = 0; i < CAPACITY; i++) {
+        const item = list[i];
+        const li = document.createElement('li');
 
-        const card = document.createElement('article');
-        card.className =
-          'card' +
-          (count > 0 ? ' has-people' : '') +
-          (isFull ? ' full' : '');
+        if (item) {
+          li.className = 'row';
 
-        const top = document.createElement('div');
-        top.className = 'card-top';
+          const num = document.createElement('span');
+          num.className = 'num';
+          num.textContent = String(i + 1);
 
-        const timeEl = document.createElement('strong');
-        timeEl.className = 'slot-time';
-        timeEl.textContent = range(slot);
+          const name = document.createElement('span');
+          name.className = 'nickname';
+          name.textContent = item.student_name;
 
-        const badgeEl = document.createElement('span');
-        badgeEl.className = 'slot-badge';
-        badgeEl.textContent = ready
-          ? (isFull ? '마감' : `${count} / ${CAPACITY_PER_SLOT}명`)
-          : '확인 중';
+          const tail = document.createElement('span');
+          tail.className = 'phone-tail';
+          tail.textContent = item.phone_last4
+            ? `뒷번호 ${item.phone_last4}`
+            : '번호 미등록';
 
-        top.append(timeEl, badgeEl);
+          li.append(num, name, tail);
+        } else {
+          li.className = 'row empty';
 
-        const remainEl = document.createElement('div');
-        remainEl.className = 'remain';
-        remainEl.textContent = ready
-          ? (isFull ? '신청이 마감되었습니다' : `잔여 ${CAPACITY_PER_SLOT - count}자리`)
-          : '현황을 불러오는 중입니다';
+          const num = document.createElement('span');
+          num.className = 'num';
+          num.textContent = String(i + 1);
 
-        card.append(top, remainEl);
+          const name = document.createElement('span');
+          name.className = 'nickname';
+          name.textContent = ready ? '빈 자리' : '확인 중…';
 
-        if (list.length > 0) {
-          const chips = document.createElement('div');
-          chips.className = 'chips';
-
-          list.forEach((item, idx) => {
-            const chip = document.createElement('span');
-            chip.className = 'chip';
-            chip.textContent = `${idx + 1}. ${item.student_name}`;
-            chips.append(chip);
-          });
-
-          card.append(chips);
-        } else if (ready) {
-          const empty = document.createElement('div');
-          empty.className = 'empty-note';
-          empty.textContent = '신청 대기 중';
-          card.append(empty);
+          li.append(num, name);
         }
 
-        $('board').append(card);
+        $('roster').append(li);
       }
     }
 
@@ -379,12 +491,7 @@
       loading = true;
 
       try {
-        const { data, error } = await db
-          .from(TABLE)
-          .select('id,slot,student_name,created_at')
-          .in('slot', SLOTS)
-          .order('created_at', { ascending: true })
-          .order('id', { ascending: true });
+        const { data, error } = await db.rpc('festival_display_list');
 
         if (error) throw error;
 
@@ -406,6 +513,35 @@
         }
       }
     }
+
+    $('prev').onclick = () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        render();
+      }
+    };
+
+    $('next').onclick = () => {
+      if (currentIndex < SLOTS.length - 1) {
+        currentIndex++;
+        render();
+      }
+    };
+
+    $('slot-select').onchange = event => {
+      currentIndex = Number(event.target.value);
+      render();
+    };
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' && currentIndex > 0) {
+        currentIndex--;
+        render();
+      } else if (event.key === 'ArrowRight' && currentIndex < SLOTS.length - 1) {
+        currentIndex++;
+        render();
+      }
+    });
 
     $('refresh').onclick = () => {
       void load();
