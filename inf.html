@@ -210,11 +210,22 @@
     .row {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       padding: 12px 16px;
       border-radius: 14px;
       background: #faf4ed;
       border: 1px solid #e8dccf;
+    }
+
+    .row.status-in_progress {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
+
+    .row.status-completed {
+      background: #f2f8f4;
+      border-color: #b7d7c3;
+      opacity: .78;
     }
 
     .row.empty {
@@ -244,7 +255,7 @@
 
     .nickname {
       flex: 1;
-      font-size: clamp(21px, 4.8vw, 27px);
+      font-size: clamp(20px, 4.5vw, 26px);
       font-weight: 800;
       overflow-wrap: anywhere;
     }
@@ -252,6 +263,29 @@
     .row.empty .nickname {
       font-size: 18px;
       font-weight: 600;
+    }
+
+    .state-badge {
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .state-badge.waiting {
+      background: #eee6df;
+      color: #5a4638;
+    }
+
+    .state-badge.in_progress {
+      background: #d97706;
+      color: white;
+    }
+
+    .state-badge.completed {
+      background: #2f7d52;
+      color: white;
     }
 
     .phone-tail {
@@ -341,6 +375,12 @@
 
     const TABLE = 'festival_sticker_reservations';
 
+    const STATUS_LABELS = {
+      waiting: '대기',
+      in_progress: '체험중',
+      completed: '체험완료'
+    };
+
     // 10:00~10:30부터 16:30~17:00까지 30분 단위 총 14개 타임
     const SLOTS = Array.from(
       { length: 14 },
@@ -381,6 +421,11 @@
 
     function bySlot(slot) {
       return rows.filter(r => Number(r.slot) === slot);
+    }
+
+    function itemStatus(item) {
+      const s = item.status;
+      return s === 'in_progress' || s === 'completed' ? s : 'waiting';
     }
 
     function showStatus() {
@@ -445,7 +490,8 @@
         const li = document.createElement('li');
 
         if (item) {
-          li.className = 'row';
+          const st = itemStatus(item);
+          li.className = `row status-${st}`;
 
           const num = document.createElement('span');
           num.className = 'num';
@@ -455,13 +501,15 @@
           name.className = 'nickname';
           name.textContent = item.student_name;
 
+          const badge = document.createElement('span');
+          badge.className = `state-badge ${st}`;
+          badge.textContent = STATUS_LABELS[st];
+
           const tail = document.createElement('span');
           tail.className = 'phone-tail';
-          tail.textContent = item.phone_last4
-            ? `뒷번호 ${item.phone_last4}`
-            : '번호 미등록';
+          tail.textContent = item.phone_last4 || '번호 미등록';
 
-          li.append(num, name, tail);
+          li.append(num, name, badge, tail);
         } else {
           li.className = 'row empty';
 
