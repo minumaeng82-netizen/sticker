@@ -697,7 +697,6 @@
     let deleting = false;
     let refreshTimer;
 
-    // 로그아웃 이전의 조회 결과가 다시 표시되지 않도록 구분합니다.
     let sessionVersion = 0;
 
     function makeElement(tag, className, text) {
@@ -735,6 +734,10 @@
       );
     }
 
+    function rowName(row) {
+      return row.nickname || row.student_name || '';
+    }
+
     function orderedRows(data) {
       return [...data].sort((a, b) => {
         const slotDifference =
@@ -744,9 +747,8 @@
           return slotDifference;
         }
 
-        // 같은 시간대 안에서는 별명 순서로 표시합니다.
-        return String(a.nickname || '').localeCompare(
-          String(b.nickname || ''),
+        return String(rowName(a)).localeCompare(
+          String(rowName(b)),
           'ko'
         );
       });
@@ -771,7 +773,7 @@
         if (!query) return true;
 
         const matchesNickname = String(
-          row.nickname || ''
+          rowName(row)
         ).toLowerCase().includes(query);
 
         const matchesPhone =
@@ -805,7 +807,6 @@
       renderDetail();
     }
 
-    // 관리자 첫 화면: 시간 블록만 표시
     function renderBlocks() {
       $('schedule').replaceChildren();
 
@@ -879,7 +880,6 @@
       }
     }
 
-    // 시간 블록을 누른 경우에만 명단 창 표시
     function renderDetail() {
       if (selectedSlot === null) return;
 
@@ -925,6 +925,8 @@
       }
 
       visibleRows.forEach((row, index) => {
+        const displayNickname = rowName(row) || '별명 없음';
+
         const card = makeElement(
           'article',
           'person'
@@ -949,7 +951,7 @@
           makeElement(
             'p',
             'nickname',
-            row.nickname || '별명 없음'
+            displayNickname
           )
         );
 
@@ -1178,7 +1180,7 @@
 
       const confirmed = confirm(
         `${range(Number(row.slot))}\n` +
-        `${row.nickname}\n\n` +
+        `${rowName(row) || '별명 없음'}\n\n` +
         '이 신청과 연결된 연락처를 삭제할까요?'
       );
 
@@ -1247,11 +1249,11 @@
 
         ...orderedRows(data).map(row => [
           range(Number(row.slot)),
-          row.nickname,
-          row.phone,
+          rowName(row),
+          row.phone ?? '',
           dateLabel(row.created_at),
           dateLabel(row.consent_at),
-          row.consent_version
+          row.consent_version ?? ''
         ])
       ];
 
@@ -1308,9 +1310,7 @@
 
         try {
           await db.auth.signOut();
-        } catch (_) {
-          // 화면의 로그인 정보는 이미 제거했습니다.
-        }
+        } catch (_) {}
 
         $('message').textContent =
           '로그인 또는 관리자 권한 확인 실패: ' +
