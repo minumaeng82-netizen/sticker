@@ -371,7 +371,8 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .person-title {
@@ -392,6 +393,59 @@
       font-size: 25px;
       font-weight: 800;
       overflow-wrap: anywhere;
+    }
+
+    .person-controls {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .status-group {
+      display: inline-flex;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #dfd1c3;
+      background: white;
+    }
+
+    .status-btn {
+      min-height: 40px;
+      padding: 8px 11px;
+      border: 0;
+      border-right: 1px solid #e6d8ca;
+      border-radius: 0;
+      background: white;
+      color: #6f5e50;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .status-btn:last-child {
+      border-right: 0;
+    }
+
+    .status-btn.active-waiting {
+      background: #eee6df;
+      color: #362b24;
+    }
+
+    .status-btn.active-in_progress {
+      background: #d97706;
+      color: white;
+    }
+
+    .status-btn.active-completed {
+      background: #2f7d52;
+      color: white;
+    }
+
+    .person .danger {
+      min-height: 40px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .phone {
@@ -620,7 +674,6 @@
     </div>
   </main>
 
-  <!-- 시간 블록을 눌렀을 때 열리는 신청자 명단 -->
   <dialog id="detail-dialog" aria-labelledby="detail-title">
     <div class="modal">
       <div class="modal-header">
@@ -673,6 +726,12 @@
     const SUPABASE_KEY =
       'sb_publishable_i74UwJOH_Zm0AUk3cdTdvQ_Nm5T2mOe';
 
+    const STATUS_LABELS = {
+      waiting: '대기',
+      in_progress: '체험중',
+      completed: '체험완료'
+    };
+
     const $ = id => document.getElementById(id);
 
     // 10:00~10:30부터 16:30~17:00까지 30분 단위 총 14개 타임
@@ -694,7 +753,7 @@
     let channel = null;
     let loading = false;
     let reloadRequested = false;
-    let deleting = false;
+    let busy = false;
     let refreshTimer;
 
     let sessionVersion = 0;
@@ -736,6 +795,11 @@
 
     function rowName(row) {
       return row.nickname || row.student_name || '';
+    }
+
+    function rowStatus(row) {
+      const s = row.status;
+      return s === 'in_progress' || s === 'completed' ? s : 'waiting';
     }
 
     function orderedRows(data) {
@@ -926,6 +990,7 @@
 
       visibleRows.forEach((row, index) => {
         const displayNickname = rowName(row) || '별명 없음';
+        const currentStatus = rowStatus(row);
 
         const card = makeElement(
           'article',
@@ -955,6 +1020,29 @@
           )
         );
 
+        const controls = makeElement(
+          'div',
+          'person-controls'
+        );
+
+        const group = makeElement(
+          'div',
+          'status-group'
+        );
+
+        for (const [key, label] of Object.entries(STATUS_LABELS)) {
+          const isActive = currentStatus === key;
+          const btn = makeElement(
+            'button',
+            'status-btn' + (isActive ? ` active-${key}` : ''),
+            label
+          );
+          btn.type = 'button';
+          btn.disabled = busy || isActive;
+          btn.onclick = () => changeStatus(row, key);
+          group.append(btn);
+        }
+
         const deleteButton = makeElement(
           'button',
           'danger',
@@ -962,10 +1050,11 @@
         );
 
         deleteButton.type = 'button';
-        deleteButton.disabled = deleting;
+        deleteButton.disabled = busy;
         deleteButton.onclick = () => removeReservation(row);
 
-        head.append(title, deleteButton);
+        controls.append(group, deleteButton);
+        head.append(title, controls);
         card.append(head);
 
         if (row.phone) {
@@ -995,6 +1084,10 @@
         );
 
         record.append(
+          document.createTextNode(
+            `상태: ${STATUS_LABELS[currentStatus]}`
+          ),
+          document.createElement('br'),
           document.createTextNode(
             `신청: ${dateLabel(row.created_at)}`
           ),
@@ -1173,8 +1266,53 @@
         });
     }
 
+    async function changeStatus(row, nextStatus) {
+      if (!active || !ready || busy) return;
+
+      const version = sessionVersion;
+      busy = true;
+      renderDetail();
+
+      try {
+        const { error } = await db.rpc(
+          'festival_admin_set_status',
+          {
+            p_id: row.id,
+            p_status: nextStatus
+          }
+        );
+
+        if (error) throw error;
+
+        if (
+          active &&
+          version === sessionVersion
+        ) {
+          await load();
+        }
+      } catch (error) {
+        if (
+          active &&
+          version === sessionVersion
+        ) {
+          alert(
+            '상태를 변경하지 못했습니다: ' + error.message
+          );
+        }
+      } finally {
+        busy = false;
+
+        if (
+          active &&
+          version === sessionVersion
+        ) {
+          renderDetail();
+        }
+      }
+    }
+
     async function removeReservation(row) {
-      if (!active || !ready || deleting) return;
+      if (!active || !ready || busy) return;
 
       const version = sessionVersion;
 
@@ -1186,7 +1324,7 @@
 
       if (!confirmed) return;
 
-      deleting = true;
+      busy = true;
       renderDetail();
 
       try {
@@ -1213,7 +1351,7 @@
           );
         }
       } finally {
-        deleting = false;
+        busy = false;
 
         if (
           active &&
@@ -1242,6 +1380,7 @@
           '체험 시간',
           '별명',
           '연락처',
+          '진행 상태',
           '신청 일시',
           '동의 일시',
           '동의 버전'
@@ -1251,6 +1390,7 @@
           range(Number(row.slot)),
           rowName(row),
           row.phone ?? '',
+          STATUS_LABELS[rowStatus(row)],
           dateLabel(row.created_at),
           dateLabel(row.consent_at),
           row.consent_version ?? ''
