@@ -351,7 +351,7 @@
     <div id="hours" class="hours"></div>
 
     <p class="hint">
-      09:40부터 17:00까지 · 타임당 20분<br>
+      10:00부터 17:00까지 · 타임당 30분<br>
       시간 세션 → 체험 시간 선택 → 별명 등록
     </p>
   </main>
@@ -487,10 +487,10 @@
 
     const $ = id => document.getElementById(id);
 
-    // 09:40부터 16:40 시작 타임까지 총 22개
+    // 10:00부터 16:30 시작 타임까지 총 14개 (30분 단위)
     const allSlots = Array.from(
-      { length: 22 },
-      (_, index) => 580 + index * 20
+      { length: 14 },
+      (_, index) => 600 + index * 30
     );
 
     let db;
@@ -519,7 +519,7 @@
     }
 
     function range(minutes) {
-      return `${time(minutes)}~${time(minutes + 20)}`;
+      return `${time(minutes)}~${time(minutes + 30)}`;
     }
 
     function hourLabel(value) {
@@ -571,7 +571,7 @@
     function render() {
       $('hours').replaceChildren();
 
-      for (let h = 9; h <= 16; h++) {
+      for (let h = 10; h <= 16; h++) {
         const slots = allSlots.filter(
           slot => Math.floor(slot / 60) === h
         );
@@ -589,7 +589,7 @@
           node(
             'span',
             '',
-            `${time(slots[0])}~${time(slots[slots.length - 1] + 20)}`
+            `${time(slots[0])}~${time(slots[slots.length - 1] + 30)}`
           ),
           node(
             'em',
