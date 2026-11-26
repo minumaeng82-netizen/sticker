@@ -600,7 +600,7 @@
       </h2>
 
       <p class="hint">
-        시간 블록을 누르면 해당 시간의 신청자 명단이 열립니다.
+        10:00부터 17:00까지 · 타임당 30분 · 시간 블록을 누르면 해당 시간의 신청자 명단이 열립니다.
       </p>
 
       <div class="legend">
@@ -675,11 +675,13 @@
 
     const $ = id => document.getElementById(id);
 
-    // 09:40~10:00부터 16:40~17:00까지
+    // 10:00~10:30부터 16:30~17:00까지 30분 단위 총 14개 타임
     const ALL_SLOTS = Array.from(
-      { length: 22 },
-      (_, index) => 580 + index * 20
+      { length: 14 },
+      (_, index) => 600 + index * 30
     );
+
+    const TOTAL_CAPACITY = ALL_SLOTS.length * 8;
 
     let db;
     let items = [];
@@ -721,7 +723,7 @@
     }
 
     function range(minutes) {
-      return `${time(minutes)}~${time(minutes + 20)}`;
+      return `${time(minutes)}~${time(minutes + 30)}`;
     }
 
     function dateLabel(value) {
@@ -787,7 +789,7 @@
         ready ? `${items.length}명` : '확인 필요';
 
       $('remaining').textContent = ready
-        ? `${Math.max(0, 176 - items.length)}자리`
+        ? `${Math.max(0, TOTAL_CAPACITY - items.length)}자리`
         : '확인 필요';
 
       const fullCount = ALL_SLOTS.filter(
