@@ -28,22 +28,24 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      max-width: min(760px, 100vw);
+      max-width: 820px;
       min-height: 100vh;
       min-height: 100dvh;
       margin: 0 auto;
-      padding: clamp(12px, 3vw, 24px);
-      gap: clamp(10px, 2vw, 16px);
+      padding: clamp(14px, 3vw, 24px);
+      gap: clamp(12px, 2vw, 16px);
     }
 
     .error {
       white-space: pre-wrap;
       color: #a32236;
       overflow-wrap: anywhere;
+      font-size: 16px;
+      font-weight: 700;
     }
 
     .error:not(:empty) {
-      padding: 12px 14px;
+      padding: 12px 16px;
       border-radius: 14px;
       background: #fff0ef;
       border: 1px solid #f3c6cc;
@@ -53,8 +55,8 @@
       display: grid;
       grid-template-columns: auto minmax(0, 1fr) auto;
       align-items: center;
-      gap: 10px;
-      padding: 12px;
+      gap: 12px;
+      padding: 12px 14px;
       border-radius: 18px;
       background: white;
       border: 1px solid #e6d8ca;
@@ -62,15 +64,15 @@
     }
 
     .nav-btn {
-      min-width: 78px;
-      min-height: 48px;
-      padding: 10px 14px;
+      min-width: 92px;
+      min-height: 54px;
+      padding: 10px 16px;
       border: 0;
       border-radius: 12px;
       background: #eee6df;
       color: #49372a;
       font: inherit;
-      font-size: clamp(15px, 2.5vw, 17px);
+      font-size: clamp(17px, 2.6vw, 20px);
       font-weight: 800;
       cursor: pointer;
       touch-action: manipulation;
@@ -84,14 +86,14 @@
     .slot-select {
       width: 100%;
       min-width: 0;
-      min-height: 48px;
-      padding: 10px 12px;
+      min-height: 54px;
+      padding: 10px 14px;
       border: 1px solid #dfd1c3;
       border-radius: 12px;
       background: #faf5ef;
       color: #362b24;
       font: inherit;
-      font-size: clamp(15px, 2.6vw, 18px);
+      font-size: clamp(18px, 3vw, 22px);
       font-weight: 800;
       text-align: center;
     }
@@ -100,7 +102,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: clamp(16px, 3.5vw, 26px);
+      padding: clamp(18px, 3.5vw, 26px);
       border-radius: 22px;
       background: white;
       border: 2px solid #e6d8ca;
@@ -119,7 +121,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
       padding-bottom: 16px;
       border-bottom: 2px dashed #eaded2;
@@ -134,17 +136,17 @@
     }
 
     .time-label {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: #8b6c52;
     }
 
     #status {
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 999px;
       background: #eee6df;
       color: #5a4638;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
     }
 
@@ -155,7 +157,7 @@
 
     .big-time {
       display: block;
-      font-size: clamp(30px, 7vw, 46px);
+      font-size: clamp(36px, 7.5vw, 54px);
       font-weight: 900;
       letter-spacing: -0.02em;
       line-height: 1.1;
@@ -167,7 +169,7 @@
 
     .big-count {
       display: block;
-      font-size: clamp(26px, 6vw, 38px);
+      font-size: clamp(32px, 6.5vw, 44px);
       font-weight: 900;
       color: #805134;
     }
@@ -177,16 +179,16 @@
     }
 
     .remain-text {
-      font-size: clamp(14px, 2.5vw, 16px);
-      font-weight: 700;
+      font-size: clamp(16px, 2.8vw, 19px);
+      font-weight: 800;
       color: #796557;
     }
 
     .roster {
       flex: 1;
       display: grid;
-      grid-template-rows: repeat(8, minmax(54px, 1fr));
-      gap: clamp(8px, 1.5vw, 12px);
+      grid-template-rows: repeat(6, minmax(66px, 1fr));
+      gap: 12px;
       margin: 18px 0 0;
       padding: 0;
       list-style: none;
@@ -195,9 +197,9 @@
     .row {
       display: flex;
       align-items: center;
-      gap: clamp(10px, 2vw, 14px);
-      padding: 10px clamp(12px, 2.5vw, 16px);
-      border-radius: 14px;
+      gap: 14px;
+      padding: 12px 18px;
+      border-radius: 16px;
       background: #faf4ed;
       border: 1px solid #e8dccf;
     }
@@ -210,7 +212,7 @@
     .row.status-completed {
       background: #f2f8f4;
       border-color: #b7d7c3;
-      opacity: .8;
+      opacity: .84;
     }
 
     .row.empty {
@@ -223,12 +225,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: clamp(30px, 5vw, 36px);
-      height: clamp(30px, 5vw, 36px);
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       background: #805134;
       color: white;
-      font-size: clamp(15px, 2.8vw, 18px);
+      font-size: 21px;
       font-weight: 800;
       flex-shrink: 0;
     }
@@ -241,20 +243,21 @@
     .nickname {
       flex: 1;
       min-width: 0;
-      font-size: clamp(18px, 4.2vw, 26px);
-      font-weight: 800;
+      font-size: clamp(26px, 5.2vw, 36px);
+      font-weight: 900;
+      line-height: 1.2;
       overflow-wrap: anywhere;
     }
 
     .row.empty .nickname {
-      font-size: clamp(15px, 3vw, 18px);
+      font-size: clamp(19px, 3.5vw, 24px);
       font-weight: 600;
     }
 
     .state-badge {
-      padding: 5px 10px;
+      padding: 7px 14px;
       border-radius: 999px;
-      font-size: clamp(12px, 2.4vw, 14px);
+      font-size: clamp(15px, 2.8vw, 19px);
       font-weight: 800;
       white-space: nowrap;
       flex-shrink: 0;
@@ -276,16 +279,77 @@
     }
 
     .phone-tail {
-      padding: 6px 10px;
-      border-radius: 10px;
+      padding: 8px 14px;
+      border-radius: 12px;
       background: white;
       border: 1px solid #dfd1c3;
       color: #805134;
-      font-size: clamp(16px, 3.6vw, 22px);
-      font-weight: 800;
+      font-size: clamp(22px, 4.4vw, 30px);
+      font-weight: 900;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
       flex-shrink: 0;
+    }
+
+    .qr-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 22px;
+      border-radius: 22px;
+      background: white;
+      border: 2px solid #dfd1c3;
+      box-shadow: 0 4px 16px #6c47230a;
+    }
+
+    .qr-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .qr-text strong {
+      display: block;
+      font-size: clamp(21px, 3.8vw, 27px);
+      font-weight: 900;
+      color: #805134;
+      line-height: 1.35;
+    }
+
+    .qr-text p {
+      margin: 6px 0 8px;
+      font-size: clamp(15px, 2.6vw, 18px);
+      color: #5a4638;
+      line-height: 1.5;
+    }
+
+    .qr-url {
+      display: inline-block;
+      font-size: clamp(13px, 2.2vw, 16px);
+      font-weight: 700;
+      color: #7c6e61;
+      word-break: break-all;
+    }
+
+    .qr-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 148px;
+      height: 148px;
+      padding: 8px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #e6d8ca;
+      flex-shrink: 0;
+    }
+
+    .qr-box img,
+    .qr-box canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .footer-bar {
@@ -295,35 +359,24 @@
       flex-wrap: wrap;
       gap: 10px;
       color: #7c6e61;
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 600;
     }
 
     .refresh-btn {
-      min-height: 40px;
-      padding: 8px 14px;
+      min-height: 42px;
+      padding: 8px 16px;
       border: 1px solid #dfd1c3;
       border-radius: 10px;
       background: white;
       color: #49372a;
       font: inherit;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    @media (min-width: 960px) {
-      main {
-        max-width: 980px;
-      }
-
-      .roster {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: repeat(4, minmax(64px, 1fr));
-        gap: 12px 16px;
-      }
-    }
-
-    @media (max-width: 520px) {
+    @media (max-width: 560px) {
       .top-controls {
         grid-template-columns: 1fr 1fr;
       }
@@ -347,7 +400,12 @@
       }
 
       .nickname {
-        flex: 1 1 calc(100% - 50px);
+        flex: 1 1 calc(100% - 58px);
+      }
+
+      .qr-banner {
+        flex-direction: column;
+        text-align: center;
       }
     }
   </style>
@@ -373,16 +431,27 @@
           <strong id="big-time" class="big-time">10:00~10:30</strong>
         </div>
         <div class="count-box">
-          <strong id="big-count" class="big-count">0 / 8명</strong>
-          <span id="remain-text" class="remain-text">잔여 8자리</span>
+          <strong id="big-count" class="big-count">0 / 6명</strong>
+          <span id="remain-text" class="remain-text">잔여 6자리</span>
         </div>
       </div>
 
       <ol id="roster" class="roster"></ol>
     </section>
 
+    <section class="qr-banner" aria-label="체험 신청 QR코드">
+      <div class="qr-text">
+        <strong>스마트폰으로 체험 신청하기</strong>
+        <p>오른쪽 QR코드를 스캔하면 신청 페이지로 바로 이동합니다.</p>
+        <span id="qr-link-text" class="qr-url">https://minumaeng82-netizen.github.io/sticker/</span>
+      </div>
+      <div id="qr-container" class="qr-box">
+        <img id="qr-img" alt="체험 신청 페이지 QR코드">
+      </div>
+    </section>
+
     <div class="footer-bar">
-      <span id="page-summary">전체 신청 0명 / 112자리</span>
+      <span id="page-summary">전체 신청 0명 / 84자리</span>
       <button id="refresh" class="refresh-btn" type="button">새로고침</button>
     </div>
   </main>
@@ -395,6 +464,9 @@
 
     const SUPABASE_KEY =
       'sb_publishable_i74UwJOH_Zm0AUk3cdTdvQ_Nm5T2mOe';
+
+    const APPLY_URL =
+      'https://minumaeng82-netizen.github.io/sticker/';
 
     const TABLE = 'festival_sticker_reservations';
 
@@ -410,9 +482,9 @@
       (_, index) => 600 + index * 30
     );
 
-    const CAPACITY = 8;
+    const CAPACITY = 6;
 
-    const $ = id => document.getElementById(id);
+    const \$ = id => document.getElementById(id);
 
     let db;
     let rows = [];
@@ -422,6 +494,31 @@
     let loading = false;
     let again = false;
     let timer;
+
+    function initQrCode() {
+      \$('qr-link-text').textContent = APPLY_URL;
+      const img = \$('qr-img');
+      const apiUrl =
+        'https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=4&data=' +
+        encodeURIComponent(APPLY_URL);
+
+      img.onerror = () => {
+        img.remove();
+        renderFallbackQr(APPLY_URL);
+      };
+      img.src = apiUrl;
+    }
+
+    // 외부 이미지 서버가 막혔을 때를 대비한 간이 코드 렌더링(URL 링크 안내 포함)
+    function renderFallbackQr(url) {
+      const box = \$('qr-container');
+      box.replaceChildren();
+      const note = document.createElement('a');
+      note.href = url;
+      note.textContent = '신청 링크 열기';
+      note.style.cssText = 'font-size:15px;font-weight:800;color:#805134;text-align:center;';
+      box.append(note);
+    }
 
     function initialSlotIndex() {
       const now = new Date();
@@ -452,7 +549,7 @@
     }
 
     function showStatus() {
-      const el = $('status');
+      const el = \$('status');
       if (!ready) {
         el.textContent = '연결 확인 필요';
         el.className = '';
@@ -466,17 +563,17 @@
     }
 
     function buildSelectOptions() {
-      $('slot-select').replaceChildren();
+      \$('slot-select').replaceChildren();
 
       SLOTS.forEach((slot, idx) => {
         const count = bySlot(slot).length;
         const opt = document.createElement('option');
         opt.value = String(idx);
         opt.textContent = `${range(slot)} (${count}/${CAPACITY}명)`;
-        $('slot-select').append(opt);
+        \$('slot-select').append(opt);
       });
 
-      $('slot-select').value = String(currentIndex);
+      \$('slot-select').value = String(currentIndex);
     }
 
     function render() {
@@ -487,32 +584,32 @@
       const count = list.length;
       const isFull = count >= CAPACITY;
 
-      $('prev').disabled = currentIndex <= 0;
-      $('next').disabled = currentIndex >= SLOTS.length - 1;
+      \$('prev').disabled = currentIndex <= 0;
+      \$('next').disabled = currentIndex >= SLOTS.length - 1;
 
-      $('stage').className =
+      \$('stage').className =
         'stage' +
         (count > 0 ? ' has-people' : '') +
         (isFull ? ' full' : '');
 
-      $('step-info').textContent =
+      \$('step-info').textContent =
         `${currentIndex + 1} / ${SLOTS.length}번째 타임`;
 
-      $('big-time').textContent = range(slot);
+      \$('big-time').textContent = range(slot);
 
-      $('big-count').textContent = ready
+      \$('big-count').textContent = ready
         ? `${count} / ${CAPACITY}명`
         : '확인 중';
 
-      $('remain-text').textContent = ready
+      \$('remain-text').textContent = ready
         ? (isFull ? '정원 마감' : `잔여 ${CAPACITY - count}자리`)
         : '현황을 불러오는 중입니다';
 
-      $('page-summary').textContent = ready
+      \$('page-summary').textContent = ready
         ? `전체 신청 ${rows.length}명 / ${SLOTS.length * CAPACITY}자리`
         : '연결 상태를 확인해 주세요';
 
-      $('roster').replaceChildren();
+      \$('roster').replaceChildren();
 
       for (let i = 0; i < CAPACITY; i++) {
         const item = list[i];
@@ -553,7 +650,7 @@
           li.append(num, name);
         }
 
-        $('roster').append(li);
+        \$('roster').append(li);
       }
     }
 
@@ -574,11 +671,11 @@
 
         rows = data || [];
         ready = true;
-        $('error').textContent = '';
+        \$('error').textContent = '';
         render();
       } catch (err) {
         ready = false;
-        $('error').textContent = '현황을 불러오지 못했습니다.\n' + err.message;
+        \$('error').textContent = '현황을 불러오지 못했습니다.\n' + err.message;
         render();
       } finally {
         loading = false;
@@ -591,21 +688,21 @@
       }
     }
 
-    $('prev').onclick = () => {
+    \$('prev').onclick = () => {
       if (currentIndex > 0) {
         currentIndex--;
         render();
       }
     };
 
-    $('next').onclick = () => {
+    \$('next').onclick = () => {
       if (currentIndex < SLOTS.length - 1) {
         currentIndex++;
         render();
       }
     };
 
-    $('slot-select').onchange = event => {
+    \$('slot-select').onchange = event => {
       currentIndex = Number(event.target.value);
       render();
     };
@@ -620,7 +717,7 @@
       }
     });
 
-    $('refresh').onclick = () => {
+    \$('refresh').onclick = () => {
       void load();
     };
 
@@ -634,6 +731,7 @@
       void load();
     });
 
+    initQrCode();
     render();
 
     try {
@@ -677,7 +775,7 @@
         }
       }, 15000);
     } catch (err) {
-      $('error').textContent = err.message;
+      \$('error').textContent = err.message;
       showStatus();
     }
   </script>
